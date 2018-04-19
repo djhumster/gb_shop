@@ -20,13 +20,15 @@ body {
   line-height: 60px;
 }
 
-#carouselExampleIndicators {
-  max-width: 1000px;
+.carousel-control-prev,
+.carousel-control-next {
+  font-size: 36px;
 }
 
 a.showCase {
   color: inherit;
 }
+
 a.showCase:hover {
   color: #fff;
   text-decoration: none;

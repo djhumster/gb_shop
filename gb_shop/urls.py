@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import mainapp.views as mainapp
+import prodapp.views as prodapp
+import contapp.views as contapp
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', mainapp.index_view),
+    path('', mainapp.index_view, name='index'),
+    path('category/', prodapp.category_view, name='category'),
+    path('contacts/', contapp.contacts_view, name='contacts'),
 ]
