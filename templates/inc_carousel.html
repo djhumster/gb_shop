@@ -2,7 +2,7 @@
 
 {# Подключаем рекламную карусель только на главной #}
 {% if request.resolver_match.url_name == 'index' %}
-    <div id="carouselIndicators" class="carousel slide mb-3 d-none d-md-block" data-ride="carousel">
+    <div id="carouselIndicators" class="carousel slide mt-3 d-none d-md-block container" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselIndicators" data-slide-to="1"></li>

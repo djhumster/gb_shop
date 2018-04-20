@@ -1,43 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-light py-2 py-md-3">
-    <a class="navbar-brand" href="{% url 'index' %}">
-        <b>Geek</b>Shop
-    </a>
-    <span href="#" class="navbar-brand d-none d-md-block text-primary ml-lg-5">
-        <span class="small">+7 (812) </span>
-        <b>111-22-33</b>
-        <span class="small text-secondary d-none d-xl-inline-block"> с 10 до 22 ежедневно</span>
-    </span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavTop" aria-controls="navbarNavTop"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end mt-2 mt-lg-0" id="navbarNavTop">
-        <div class="d-md-none text-center mb-2">
-            <h5 href="#" class="text-primary mb-0">+7 (812) 111-22-33</h5>
-            <div class="small text-secondary">с 10 до 22 ежедневно</div>
-        </div>
-        <form class="form-inline mr-lg-5">
-            <div class="input-group w-100">
-                <input class="form-control" placeholder="Поиск" aria-label="search" type="search">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="fas fa-search fa-flip-horizontal"></i>
-                    </button>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-2 py-md-3">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <b>Geek</b>Shop
+        </a>
+        <span href="#" class="navbar-brand d-none d-md-block text-primary ml-lg-5">
+            <span class="small">+7 (812) </span>
+            <b>111-22-33</b>
+            <small class="text-muted d-none d-xl-inline"> с 10 до 22 ежедневно</small>
+        </span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavTop" aria-controls="navbarNavTop"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end mt-2 mt-lg-0" id="navbarNavTop">
+            <div class="d-md-none text-center mb-2">
+                <h5 href="#" class="text-primary mb-0">+7 (812) 111-22-33</h5>
+                <div class="small text-muted">с 10 до 22 ежедневно</div>
             </div>
-        </form>
-        <div class="navbar-nav ml-lg-5">
-            <a class="nav-item nav-link d-none d-lg-inline" href="#">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            <a class="nav-item nav-link btn btn-sm btn-warning d-block d-lg-none my-2" href="#">
-                Корзина&nbsp;
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            <a class="nav-item nav-link btn btn-sm btn-primary px-3 ml-lg-3 text-white" href="#">
-                Вход&nbsp;
-                <i class="fas fa-sign-in-alt"></i>
-            </a>
+            <form class="form-inline mr-lg-5">
+                <div class="input-group w-100">
+                    <input class="form-control" placeholder="Поиск" aria-label="search" type="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fas fa-search fa-flip-horizontal"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-nav ml-lg-5">
+                <a class="nav-item nav-link d-none d-lg-inline" href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a class="nav-item nav-link btn btn-sm btn-warning d-block d-lg-none my-2" href="#">
+                    Корзина&nbsp;
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a class="nav-item nav-link btn btn-sm btn-primary px-3 ml-lg-3 text-white" href="#">
+                    Вход&nbsp;
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
