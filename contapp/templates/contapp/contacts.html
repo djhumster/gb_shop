@@ -1,9 +1,46 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ block.super }} - К...
+    {{ block.super }} - Контакты
 {% endblock %}
 
 {% block main %}
-    <h3>Тут будут контакты</h3>
+    <div class="row">
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <h5 class="card-header">Напишите нам</h5>
+                <div class="card-body">
+                    <form>
+                        {# TODO: валидация формы и выделение обязательных полей #}
+                        <div class="form-group">
+                            <!-- <label for="InputEmail1">Email</label> -->
+                            <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="mail@example.com" required>
+                            <small id="emailHelp" class="form-text text-muted">Мы не передаем контакты третьим лицам.</small>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="InputPassword1">Имя</label> -->
+                            <input type="text" class="form-control" id="Name" placeholder="Имя">
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="InputPassword1">Имя</label> -->
+                            <input type="text" class="form-control" id="MessageTheme" placeholder="Тема сообщения" required>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="FormControlTextarea1">Сообщение</label> -->
+                            <textarea class="form-control" id="FormControlTextarea1" rows="4" placeholder="Текст сообщения"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aa846e910c63664250d6ce0b826e052915e4d3aa7e79df36ea689648bb8f77076&amp;width=100%25&amp;height=600&amp;lang=ru_RU&amp;scroll=true"></script>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

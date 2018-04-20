@@ -23,21 +23,14 @@
 
         {% include 'inc_carousel.html' %}
 
-        <nav class="nav nav-pills nav-fill mt-3 container">
-            <a class="nav-item nav-link active" href="#">Телефоны</a>
-            <a class="nav-item nav-link" href="#">Планшеты</a>
-            <a class="nav-item nav-link" href="#">Ноутбуки</a>
-            <a class="nav-item nav-link" href="#">Телевизоры</a>
-            <a class="nav-item nav-link" href="{% url 'category' %}">Игровые приставки</a>
-            <a class="nav-item nav-link" href="{% url 'contacts' %}">Контакты</a>
-        </nav>
+        {% include 'inc_nav_menu.html' %}
     </header>
 
     <main role="main" class="container py-2 py-md-3">
         {% block main %}
         {% endblock %}
     </main>
-
+    <!-- FIXME: отступ футера на маленьких экранах -->
     <footer id="main_footer" class="footer bg-light">
         <div class="container">
             <div class="row">
