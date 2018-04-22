@@ -1,8 +1,9 @@
 <nav class="nav nav-pills nav-fill mt-3 container">
-    <a class="nav-item nav-link active" href="{% url 'category' %}">Телефоны</a>
-    <a class="nav-item nav-link" href="{% url 'category' %}">Планшеты</a>
-    <a class="nav-item nav-link" href="{% url 'category' %}">Ноутбуки</a>
-    <a class="nav-item nav-link" href="{% url 'category' %}">Телевизоры</a>
-    <a class="nav-item nav-link" href="{% url 'category' %}">Игровые приставки</a>
-    <a class="nav-item nav-link" href="{% url 'contacts' %}">Контакты</a>
+    {% for link in links_menu %}
+        <a class="nav-item nav-link {% if request.resolver_match.url_name == link.href %}
+                                        active
+                                    {% endif %}" href="{% url link.href %}">
+            {{ link.name|title }}
+        </a>
+    {% endfor %}
 </nav>
