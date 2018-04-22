@@ -1,9 +1,12 @@
 <nav class="nav nav-pills nav-fill mt-3 container">
     {% for link in links_menu %}
-        <a class="nav-item nav-link {% if request.resolver_match.url_name == link.href %}
-                                        active
-                                    {% endif %}" href="{% url link.href %}">
-            {{ link.name|title }}
+        <a class="nav-item nav-link"
+            href="{% if link.cat_name %}
+                        {% url link.href link.cat_name %}
+                    {% else %}
+                        {% url link.href %}
+                    {% endif %}">
+            {{ link.title|capfirst }}
         </a>
     {% endfor %}
 </nav>

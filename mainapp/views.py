@@ -2,20 +2,26 @@ from django.shortcuts import render
 
 
 links_menu = [
-    {'href': 'index', 'name': 'главная'},
-    {'href': 'category', 'name': 'телефоны'},
-    {'href': 'category', 'name': 'ноутбуки'},
-    {'href': 'category', 'name': 'телевизоры'},
-    {'href': 'category', 'name': 'игровые приставки'},
-    {'href': 'category', 'name': 'игры'},
-    {'href': 'contacts', 'name': 'контакты'},
+    {'href': 'index', 'title': 'главная'},
+    {'href': 'category', 'title': 'телефоны', 'cat_name': 'phones'},
+    {'href': 'category', 'title': 'ноутбуки', 'cat_name': 'notebooks'},
+    {'href': 'category', 'title': 'телевизоры', 'cat_name': 'tv'},
+    {'href': 'category', 'title': 'игровые приставки', 'cat_name': 'consoles'},
+    {'href': 'category', 'title': 'игры', 'cat_name': 'games'},
+    {'href': 'contacts', 'title': 'контакты'},
 ]
 
 def index_view(request):
-    return render(request, 'mainapp/index.html', {'links_menu': links_menu})
+    title = 'главная'
+    return render(request, 'mainapp/index.html', {'title': title, 'links_menu': links_menu})
     
-def category_view(request):
-    return render(request, 'mainapp/category.html', {'links_menu': links_menu})
+def category_view(request, cat_name):
+    for links in links_menu:
+        if links.get('cat_name') and links['cat_name'] == cat_name:
+            title = links['title']
+
+    return render(request, 'mainapp/category.html', {'title': title, 'links_menu': links_menu})
 
 def contacts_view(request):
-    return render(request, 'mainapp/contacts.html', {'links_menu': links_menu})
+    title = 'контакты'
+    return render(request, 'mainapp/contacts.html', {'title': title, 'links_menu': links_menu})

@@ -20,6 +20,8 @@ body {
   line-height: 60px;
 }
 
+.nav {padding-left: 15px;}
+
 .carousel-control-prev,
 .carousel-control-next {
   font-size: 36px;
