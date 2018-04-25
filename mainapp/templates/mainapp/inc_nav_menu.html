@@ -1,12 +1,12 @@
 <nav class="nav nav-pills nav-fill mt-3 container">
     {% for link in links_menu %}
         <a class="nav-item nav-link"
-            href="{% if link.cat_name %}
-                        {% url link.href link.cat_name %}
+            href="{% if link.cat_url %}
+                        {% url link.href link.cat_url %}
                     {% else %}
                         {% url link.href %}
                     {% endif %}">
-            {{ link.title|capfirst }}
+            {{ link.name|capfirst }}
         </a>
     {% endfor %}
 </nav>
