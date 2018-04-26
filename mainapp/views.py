@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from .models import Category, Product
 
@@ -8,9 +9,10 @@ def make_menu():
 
     for cat in category:
         links.append({
-            'href':'category',
-            'cat_url':cat.url_path,
-            'name':cat.name
+            'href': 'category',
+            'cat_url': cat.url_path,
+            'name': cat.name,
+            'cat_id': cat.id
         })
 
     links.append({
@@ -20,22 +22,41 @@ def make_menu():
 
     return links
 
-links_menu = make_menu()
-
 def index_view(request):
     title = 'главная'
+    context ={
+        'title': title,
+        'links_menu': make_menu()
+    }
 
-    return render(request, 'mainapp/index.html', {'title': title, 'links_menu': links_menu})
+    return render(request, 'mainapp/index.html', context)
     
 def category_view(request, cat_url):
+    title = None
+    links_menu = make_menu()
 
-    for links in links_menu:
-        if links.get('cat_url') and links['cat_url'] == cat_url:
-            title = links['name']
+    for link in links_menu:
+        if link.get('cat_url') and link['cat_url'] == cat_url:
+            title = link['name']
+            products = Product.objects.filter(category_id=link['cat_id'])
             break
+    
+    if title is None:
+        raise Http404('Категория не существует!')
 
-    return render(request, 'mainapp/category.html', {'title': title, 'links_menu': links_menu})
+    context = {
+        'title': title,
+        'links_menu': links_menu,
+        'products': products
+    }
+
+    return render(request, 'mainapp/category.html', context)
 
 def contacts_view(request):
     title = 'контакты'
-    return render(request, 'mainapp/contacts.html', {'title': title, 'links_menu': links_menu})
+    context ={
+        'title': title,
+        'links_menu': make_menu()
+    }
+
+    return render(request, 'mainapp/contacts.html', context)

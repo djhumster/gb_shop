@@ -13,7 +13,7 @@ class Category(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Название', max_length=64)
-    brand = models.CharField(verbose_name='Производитель', max_length=64, default='noname')
+    brand = models.CharField(verbose_name='Производитель', max_length=64, blank=True)
     short_desc = models.CharField(verbose_name='Короткое описание', max_length=255)
     full_desc = models.TextField(verbose_name='Полное описание', blank=True)
     image = models.ImageField(verbose_name='Изображение', upload_to='products', blank=True)
