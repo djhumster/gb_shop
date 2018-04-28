@@ -10,40 +10,41 @@
         {% endblock %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {# <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap.min.css' %}" /> #}
+    {# <link rel="stylesheet" media="screen" href="{% static 'css/bootstrap.min.css' %}" /> #}
     {# Для поддержки IntelliSense TODO: убрать! #}
-    <link rel="stylesheet" type="text/css" media="screen" href="../../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" media="screen" href="../../../static/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-    <header id="main_header">
-        {% include 'mainapp/inc_top_menu.html' %}
+    <div id="wrapper" class="d-flex flex-column">
+        <header id="main_header">
+            {% include 'mainapp/inc_top_menu.html' %}
 
-        {% include 'mainapp/inc_carousel.html' %}
+            {% include 'mainapp/inc_carousel.html' %}
 
-        {% include 'mainapp/inc_nav_menu.html' %}
-    </header>
+            {% include 'mainapp/inc_nav_menu.html' %}
+        </header>
 
-    <main role="main" class="container py-2 py-md-3">
-        {% block main %}
-        {% endblock %}
-    </main>
-    <!-- FIXME: отступ футера на маленьких экранах -->
-    <footer id="main_footer" class="footer bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="text-muted small col-12 col-sm-6">&copy; GeekShop Ltd. - {% now 'Y' %}</div>
-                <div class="text-muted small text-sm-right col-12 col-sm-6">Created by
-                    <a target="_blank" href="https://github.com/djhumster">Pavel Vishnyakov</a>
+        <main role="main" class="container py-2 py-md-3">
+            {% block main %}
+            {% endblock %}
+        </main>
+        <footer id="main_footer" class="bg-light py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="text-muted small col-12 col-sm-6">&copy; GeekShop Ltd. - {% now 'Y' %}</div>
+                    <div class="text-muted small text-sm-right col-12 col-sm-6">Created by
+                        <a target="_blank" href="https://github.com/djhumster">Pavel Vishnyakov</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </div>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 <div class="row">
     {% for product in products %}
     <div class="col-md-6 col-lg-4 mb-3">
-        <div class="card">
+        <div class="card h-100">
             <img class="card-img-top" src="
                     {% if product.image %}
                         {{ product.image.url }}
@@ -21,7 +21,9 @@
                 </h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ product.price }} <i class="fas fa-ruble-sign"></i></h6>
                 <p class="card-text">{{ product.short_desc }}</p>
-                <a href="#" class="btn btn-warning px-4">Купить</a>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="#" class="btn btn-warning btn-block">Купить</a>
             </div>
         </div>
     </div>

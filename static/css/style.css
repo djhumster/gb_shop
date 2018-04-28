@@ -1,23 +1,5 @@
-/* Sticky footer styles
--------------------------------------------------- */
-
-html {
-  position: relative;
+body, #wrapper {
   min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-  /* Margin bottom by footer height */
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  min-height: 60px;
-  /* Set the fixed height of the footer here */
-  line-height: 60px;
 }
 
 .nav {padding-left: 15px;}
@@ -35,6 +17,10 @@ a.showCase:hover {
   color: #fff;
   text-decoration: none;
   background-color: #007bff !important;
+}
+
+.card-footer {
+  border-top: none;
 }
 /*
    * Dummy devices (replace them with your own or something else entirely!)
