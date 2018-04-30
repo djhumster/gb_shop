@@ -10,10 +10,18 @@ class Category(models.Model):
         return self.name
 
 
+class Brand(models.Model):
+    name = models.CharField(verbose_name='название', max_length=64)
+    logo = models.ImageField(verbose_name='логотип', upload_to='brand_logos', blank=True)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+
     name = models.CharField(verbose_name='Название', max_length=64)
-    brand = models.CharField(verbose_name='Производитель', max_length=64, blank=True)
     short_desc = models.CharField(verbose_name='Короткое описание', max_length=255)
     full_desc = models.TextField(verbose_name='Полное описание', blank=True)
     image = models.ImageField(verbose_name='Изображение', upload_to='products', blank=True)
