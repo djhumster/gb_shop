@@ -9,7 +9,7 @@ def make_menu():
 
     for cat in category:
         links.append({
-            'href': 'category',
+            'href': 'products:category',
             'cat_url': cat.url_path,
             'name': cat.name,
             'cat_id': cat.id
@@ -23,15 +23,14 @@ def make_menu():
     return links
 
 def index_view(request):
-    title = 'главная'
     context ={
-        'title': title,
+        'title': 'главная',
         'links_menu': make_menu()
     }
 
     return render(request, 'mainapp/index.html', context)
     
-def category_view(request, cat_url):
+def category_view(request, cat_url=None):
     title = None
     links_menu = make_menu()
 
@@ -53,9 +52,8 @@ def category_view(request, cat_url):
     return render(request, 'mainapp/category.html', context)
 
 def contacts_view(request):
-    title = 'контакты'
     context ={
-        'title': title,
+        'title': 'контакты',
         'links_menu': make_menu()
     }
 
