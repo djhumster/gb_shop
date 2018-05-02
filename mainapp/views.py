@@ -35,7 +35,7 @@ def category_view(request, cat_url=None):
     links_menu = make_menu()
 
     for link in links_menu:
-        if link.get('cat_url') and link['cat_url'] == cat_url:
+        if link.get('cat_url') == cat_url:
             title = link['name']
             products = Product.objects.filter(category_id=link['cat_id'])
             break

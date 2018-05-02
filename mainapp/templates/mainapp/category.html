@@ -4,7 +4,7 @@
 <div class="row">
     {% for product in products %}
     <div class="col-md-6 col-lg-4 mb-3">
-        <div class="card h-100">
+        <div class="card h-100 shadow-sm">
             <img class="card-img-top" src="
                     {% if product.image %}
                         {{ product.image.url }}
@@ -13,8 +13,8 @@
             <div class="card-body">
                 <h5 class="card-title">
                     <a class="card-link" href="#">
-                        {% if product.brand %}
-                            {{ product.brand }}
+                        {% if product.brand|stringformat:'s' != 'noname' %}
+                            {{ product.brand|capfirst }}
                         {% endif %}
                         {{ product.name }}
                     </a>
