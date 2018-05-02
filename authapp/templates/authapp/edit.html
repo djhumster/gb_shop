@@ -1,0 +1,12 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block main %}
+    <img src="/media/{{ user.avatar }}" alt="">
+    <form action="{% url 'auth:register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ edit_form.as_p }}
+        <input class="btn btn-success text-capitalize" type="submit" value="сохранить">
+    </form>
+    <a href="{% url 'index' %}" class="btn btn-primary text-capitalize">на главную</a>
+{% endblock %}

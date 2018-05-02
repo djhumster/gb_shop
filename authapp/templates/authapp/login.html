@@ -4,7 +4,10 @@
 {% block main %}
     <form action="{% url 'auth:login' %}" method="POST">
         {% csrf_token %}
-        {{ login_form.as_ul }}
-        <input class="form-control" type="submit" value="вход">
+        {{ login_form.as_p }}
+        <input class="btn btn-success text-capitalize" type="submit" value="вход">
     </form>
+    <a class="btn btn-primary text-capitalize" href="{% url 'auth:register' %}">
+        регистрация
+    </a>
 {% endblock %}
