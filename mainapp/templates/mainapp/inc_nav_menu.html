@@ -1,6 +1,11 @@
 <nav class="nav nav-pills nav-fill mt-3 container">
     {% for link in links_menu %}
-        <a class="nav-item nav-link"
+        <a class="nav-item nav-link
+            {% if request.resolver_match.url_name == link.href %}
+                active
+            {% elif request.resolver_match.kwargs.cat_url and request.resolver_match.kwargs.cat_url == link.cat_url %}
+                active
+            {% endif %}"
             href="{% if link.cat_url %}
                         {% url link.href link.cat_url %}
                     {% else %}

@@ -1,9 +1,9 @@
-from django.urls import re_path
+from django.urls import path
 
 import mainapp.views as mainapp
 
 app_name = 'mainapp'
 
 urlpatterns = [
-    re_path(r'^(?P<cat_url>[\w\d-]+)/$', mainapp.category_view, name='category'),
+    path('<cat_url>/', mainapp.category_view, name='category'),
 ]

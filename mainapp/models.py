@@ -26,6 +26,7 @@ class Product(models.Model):
     full_desc = models.TextField(verbose_name='Полное описание', blank=True)
     image = models.ImageField(verbose_name='Изображение', upload_to='products', blank=True)
     price = models.DecimalField(verbose_name='Цена', max_digits=8, decimal_places=2, default=0)
+    quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
 
     def __str__(self):
         return f'({self.category.name}) {self.brand} {self.name}'

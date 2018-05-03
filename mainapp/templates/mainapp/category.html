@@ -1,6 +1,9 @@
 {% extends 'mainapp/base.html' %} 
 
 {% block main %}
+{% if products|length_is:'0' %}
+    <h5>Нет товаров в данной категории.</h3>
+{% endif %}
 <div class="row">
     {% for product in products %}
     <div class="col-md-6 col-lg-4 mb-3">
@@ -23,7 +26,7 @@
                 <p class="card-text">{{ product.short_desc }}</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a href="#" class="btn btn-warning btn-block">Купить</a>
+                <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning btn-block">Купить&nbsp;<i class="fas fa-cart-plus"></i></a>
             </div>
         </div>
     </div>

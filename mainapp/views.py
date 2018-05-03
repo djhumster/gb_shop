@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
-from .models import Category, Product
+from mainapp.models import Category, Product
+from shopcartapp.models import ShoppingCart
 
 
 def make_menu():
@@ -22,10 +23,22 @@ def make_menu():
 
     return links
 
+def shopping_cart_count(request):
+    cart_count = 0
+
+    if request.user.is_authenticated:
+        cart = ShoppingCart.objects.filter(user=request.user)
+
+        for item in cart:
+            cart_count += item.quantity
+
+    return cart_count
+
 def index_view(request):
     context ={
         'title': 'главная',
-        'links_menu': make_menu()
+        'links_menu': make_menu(),
+        'shopping_cart_count': shopping_cart_count(request)
     }
 
     return render(request, 'mainapp/index.html', context)
@@ -37,7 +50,7 @@ def category_view(request, cat_url=None):
     for link in links_menu:
         if link.get('cat_url') == cat_url:
             title = link['name']
-            products = Product.objects.filter(category_id=link['cat_id'])
+            products = Product.objects.filter(category__pk=link['cat_id']).order_by('name')
             break
     
     if title is None:
@@ -46,15 +59,17 @@ def category_view(request, cat_url=None):
     context = {
         'title': title,
         'links_menu': links_menu,
-        'products': products
+        'products': products,
+        'shopping_cart_count': shopping_cart_count(request)
     }
-
+    
     return render(request, 'mainapp/category.html', context)
 
 def contacts_view(request):
     context ={
         'title': 'контакты',
-        'links_menu': make_menu()
+        'links_menu': make_menu(),
+        'shopping_cart_count': shopping_cart_count(request)
     }
 
     return render(request, 'mainapp/contacts.html', context)

@@ -14,10 +14,10 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end mt-2 mt-lg-0" id="navbarNavTop">
             <div class="d-md-none text-center mb-2">
-                <h5 href="#" class="text-primary mb-0">+7 (812) 111-22-33</h5>
+                <h5 class="text-primary mb-0">+7 (812) 111-22-33</h5>
                 <div class="small text-muted">с 10 до 22 ежедневно</div>
             </div>
-            <form class="form-inline mr-lg-5">
+            <form class="form-inline mx-lg-3">
                 <div class="input-group w-100">
                     <input class="form-control" placeholder="Поиск" aria-label="search" type="search">
                     <div class="input-group-append">
@@ -27,28 +27,38 @@
                     </div>
                 </div>
             </form>
-            <div class="navbar-nav ml-lg-5">
-                <a class="nav-item nav-link d-none d-lg-inline" href="#">
-                    <i class="fas fa-shopping-cart"></i>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link d-none d-lg-inline" href="{% url 'shopping_cart:view' %}">
+                    {% if shopping_cart_count %}
+                        <span class="text-danger">
+                            <i class="fas fa-cart-arrow-down"></i>-{{ shopping_cart_count }}
+                        </span>
+                    {% else %}
+                        <i class="fas fa-shopping-cart"></i>
+                    {% endif %}
                 </a>
-                <a class="nav-item nav-link btn btn-sm btn-warning d-lg-none mt-2 mb-1 mb-lg-0" href="#">
+                <a class="nav-item nav-link btn btn-sm btn-warning d-lg-none mt-2 mb-1" href="#">
                     Корзина&nbsp;
-                    <i class="fas fa-shopping-cart"></i>
+                    {% if shopping_cart_count %}
+                        <i class="fas fa-cart-arrow-down"></i> - товаров: {{ shopping_cart_count }}
+                    {% else %}
+                        <i class="fas fa-shopping-cart"></i>
+                    {% endif %}
                 </a>
                 {% if user.is_authenticated %}
-                    <div class="nav-item px-3 d-none d-lg-block ml-lg-3 text-center">
+                    <div class="nav-item px-3 d-none d-lg-block text-center">
                         <a class="nav-link" href="{% url 'auth:edit' %}">{{ user.first_name|default:user.get_username }}</a>
                     </div>
                     <a class="nav-item nav-link btn btn-sm btn-info d-lg-none text-center text-white" href="{% url 'auth:edit' %}">
                         {{ user.first_name|default:user.get_username }}
                         &nbsp;<i class="fas fa-user"></i>
                     </a>
-                    <a class="nav-item nav-link btn btn-sm btn-danger px-3 ml-lg-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:logout' %}">
+                    <a class="nav-item nav-link btn btn-sm btn-danger px-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:logout' %}">
                         Выход&nbsp;
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <a class="nav-item nav-link btn btn-sm btn-primary px-3 ml-lg-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:login' %}">
+                    <a class="nav-item nav-link btn btn-sm btn-primary px-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:login' %}">
                         Вход&nbsp;
                         <i class="fas fa-sign-in-alt"></i>
                     </a>
