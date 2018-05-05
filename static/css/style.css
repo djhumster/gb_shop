@@ -22,6 +22,20 @@ a.showCase:hover {
 .card-footer {
   border-top: none;
 }
+
+.hot-deal {
+  width: 80%;
+  height: 300px;
+  border-radius: 21px 21px 0 0;
+  overflow: hidden;
+}
+
+.hot-deal > img {height: 100%;}
+
+.errorlist {
+  color: #dc3545 !important;
+  list-style-type: circle;
+}
 /*
    * Dummy devices (replace them with your own or something else entirely!)
    */

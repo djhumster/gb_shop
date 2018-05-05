@@ -3,10 +3,12 @@ from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditF
 from django.contrib import auth
 from django.urls import reverse
 
+from mainapp.views import make_menu
 
 def login(request):
     title = 'вход'
-    login_form = ShopUserLoginForm(data=request.POST)
+
+    login_form = ShopUserLoginForm(data=request.POST) if request.POST else ShopUserLoginForm()
     
     if request.method == 'POST' and login_form.is_valid():
         usrn = request.POST['username']
@@ -21,7 +23,8 @@ def login(request):
 
     context = {
         'title': title,
-        'login_form': login_form
+        'login_form': login_form,
+        'links_menu': make_menu()
     }
 
     return render(request, 'authapp/login.html', context)
@@ -46,7 +49,8 @@ def register(request):
 
     context = {
         'title': title,
-        'register_form': register_form
+        'register_form': register_form,
+        'links_menu': make_menu()
     }
 
     return render(request, 'authapp/register.html', context)
@@ -67,7 +71,8 @@ def edit(request):
 
     context = {
         'title': title,
-        'edit_form': edit_form
+        'edit_form': edit_form,
+        'links_menu': make_menu()
     }
 
     return render(request, 'authapp/edit.html', context)

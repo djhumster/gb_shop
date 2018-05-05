@@ -24,8 +24,11 @@ class ShopUserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'from-control'
+        for field_name, field in self.fields.items():
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'form-control-file'
+            else:
+                field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
 

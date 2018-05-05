@@ -1,4 +1,4 @@
-{% extends 'authapp/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block main %}
@@ -8,5 +8,4 @@
         {{ edit_form.as_p }}
         <input class="btn btn-success text-capitalize" type="submit" value="сохранить">
     </form>
-    <a href="{% url 'index' %}" class="btn btn-primary text-capitalize">на главную</a>
 {% endblock %}

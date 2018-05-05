@@ -31,7 +31,7 @@
                 <a class="nav-item nav-link d-none d-lg-inline" href="{% url 'shopping_cart:view' %}">
                     {% if shopping_cart_count %}
                         <span class="text-danger">
-                            <i class="fas fa-cart-arrow-down"></i>-{{ shopping_cart_count }}
+                            <i class="fas fa-cart-arrow-down"></i>&nbsp;{{ shopping_cart_count }}шт.
                         </span>
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
@@ -46,7 +46,7 @@
                     {% endif %}
                 </a>
                 {% if user.is_authenticated %}
-                    <div class="nav-item px-3 d-none d-lg-block text-center">
+                    <div class="nav-item pr-3 d-none d-lg-block text-center">
                         <a class="nav-link" href="{% url 'auth:edit' %}">{{ user.first_name|default:user.get_username }}</a>
                     </div>
                     <a class="nav-item nav-link btn btn-sm btn-info d-lg-none text-center text-white" href="{% url 'auth:edit' %}">
@@ -58,7 +58,7 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <a class="nav-item nav-link btn btn-sm btn-primary px-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:login' %}">
+                    <a class="nav-item nav-link btn btn-sm btn-primary px-3 mt-1 mt-lg-0 ml-lg-3 text-white" href="{% url 'auth:login' %}">
                         Вход&nbsp;
                         <i class="fas fa-sign-in-alt"></i>
                     </a>
