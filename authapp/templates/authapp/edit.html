@@ -2,10 +2,22 @@
 {% load static %}
 
 {% block main %}
-    <img src="/media/{{ user.avatar }}" alt="">
-    <form action="{% url 'auth:register' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ edit_form.as_p }}
-        <input class="btn btn-success text-capitalize" type="submit" value="сохранить">
-    </form>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h5 class="card-title mb-0">{{ title|title }}&nbsp;<i class="far fa-address-card"></i></h5>
+            </div>
+            <div class="card-body">
+                <img src="/media/{{ user.avatar }}" alt="">
+                <form id="edit_profile_form" action="{% url 'auth:register' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} {{ edit_form.as_p }}
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <input class="btn btn-success w-50 text-capitalize" type="submit" value="сохранить" form="edit_profile_form">
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

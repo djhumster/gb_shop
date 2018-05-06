@@ -15,8 +15,8 @@
                 alt="{{ product.name }}" data-holder-rendered="true">
             <div class="card-body">
                 <h5 class="card-title">
-                    <a class="card-link" href="#">
-                        {% if product.brand|stringformat:'s' != 'noname' %}
+                    <a class="card-link" href="{% url 'products:product' product.category.url_path product.pk %}">
+                        {% if product.brand|stringformat:'s'|lower != 'noname' %}
                             {{ product.brand|capfirst }}
                         {% endif %}
                         {{ product.name }}

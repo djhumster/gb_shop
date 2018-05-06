@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+
+{% block main %}
+<div class="row border border-light shadow-sm p-3">
+    <div class="col-md-5 col-lg-6">
+        <img class="img-fluid img-product" src="
+            {% if product.image %}
+                {{ product.image.url }}
+            {% endif %}" alt="{{ product.name }}" data-holder-rendered="true">
+    </div>
+    <div class="col-md-7 col-lg-6">
+        <h3>
+            {% if product.brand|stringformat:'s'|lower != 'noname' %} {{ product.brand|capfirst }} {% endif %} {{ product.name }}
+        </h3>
+        <div class="row mb-3 align-items-center">
+            <h4 class="text-muted col-sm mb-sm-0">{{ product.price }}
+                <i class="fas fa-ruble-sign"></i>
+            </h4>
+            <div class="col-sm d-lg-none">
+                <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning px-4">Купить&nbsp;
+                    <i class="fas fa-cart-plus"></i>
+                </a>
+            </div>
+        </div>
+        <p>{{ product.short_desc }}</p>
+        <p>{{ product.full_desc }}</p>
+        <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning px-4 d-none d-lg-inline">Купить&nbsp;
+                <i class="fas fa-cart-plus"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}

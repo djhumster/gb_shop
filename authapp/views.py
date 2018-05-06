@@ -8,7 +8,7 @@ from mainapp.views import make_menu
 def login(request):
     title = 'вход'
 
-    login_form = ShopUserLoginForm(data=request.POST) if request.POST else ShopUserLoginForm()
+    login_form = ShopUserLoginForm(data=request.POST or None)
     
     if request.method == 'POST' and login_form.is_valid():
         usrn = request.POST['username']

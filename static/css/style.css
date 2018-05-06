@@ -36,6 +36,8 @@ a.showCase:hover {
   color: #dc3545 !important;
   list-style-type: circle;
 }
+
+.img-product {width: 100%;}
 /*
    * Dummy devices (replace them with your own or something else entirely!)
    */

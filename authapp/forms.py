@@ -41,7 +41,10 @@ class ShopUserEditForm(UserChangeForm):
         super().__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'form-control-file'
+            else:
+                field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
             if field_name == 'password':

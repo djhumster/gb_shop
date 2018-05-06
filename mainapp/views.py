@@ -1,5 +1,6 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from mainapp.models import Category, Product
 from shopcartapp.models import ShoppingCart
 
@@ -13,7 +14,7 @@ def make_menu():
             'href': 'products:category',
             'cat_url': cat.url_path,
             'name': cat.name,
-            'cat_id': cat.id
+            'cat_id': int(cat.id)
         })
 
     links.append({
@@ -35,7 +36,7 @@ def shopping_cart_count(request):
     return cart_count
 
 def index_view(request):
-    context ={
+    context = {
         'title': 'главная',
         'links_menu': make_menu(),
         'shopping_cart_count': shopping_cart_count(request)
@@ -66,10 +67,26 @@ def category_view(request, cat_url=None):
     return render(request, 'mainapp/category.html', context)
 
 def contacts_view(request):
-    context ={
+    context = {
         'title': 'контакты',
         'links_menu': make_menu(),
         'shopping_cart_count': shopping_cart_count(request)
     }
 
     return render(request, 'mainapp/contacts.html', context)
+
+def product_view(request, cat_url=None, pk=None):
+    if not pk:
+        return HttpResponseRedirect(reverse('index'))
+    
+    product = get_object_or_404(Product, pk=int(pk))
+    title = product.name
+
+    context = {
+        'title': title,
+        'links_menu': make_menu(),
+        'shopping_cart_count': shopping_cart_count(request),
+        'product': product
+    }
+
+    return render(request, 'mainapp/product.html', context)

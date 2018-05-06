@@ -31,10 +31,12 @@
                 <a class="nav-item nav-link d-none d-lg-inline" href="{% url 'shopping_cart:view' %}">
                     {% if shopping_cart_count %}
                         <span class="text-danger">
-                            <i class="fas fa-cart-arrow-down"></i>&nbsp;{{ shopping_cart_count }}шт.
+                            <i class="fas fa-cart-arrow-down"></i>
+                            <span class="badge badge-danger">{{ shopping_cart_count }}</span>
                         </span>
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
+                        <span class="badge badge-secondary">{{ shopping_cart_count }}</span>
                     {% endif %}
                 </a>
                 <a class="nav-item nav-link btn btn-sm btn-warning d-lg-none mt-2 mb-1" href="#">
