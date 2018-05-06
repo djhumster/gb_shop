@@ -9,3 +9,21 @@ class ShoppingCart(models.Model):
     
     quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
     add_datetime = models.DateField(verbose_name='время', auto_now_add=True)
+
+    def products_quantity(self):
+        items = ShoppingCart.objects.filter(user=self.user)
+        total_quantity = sum(list(map(lambda x: x.quantity, items)))
+
+        return total_quantity
+
+    def total_product_sum(self):
+        return self.product.price * self.quantity
+
+    def total_cart_sum(self):
+        total_sum = 0
+        items = ShoppingCart.objects.filter(user=self.user)
+        
+        for item in items:
+            total_sum += item.product.price * item.quantity
+        
+        return total_sum

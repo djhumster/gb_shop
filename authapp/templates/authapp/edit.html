@@ -9,8 +9,10 @@
                 <h5 class="card-title mb-0">{{ title|title }}&nbsp;<i class="far fa-address-card"></i></h5>
             </div>
             <div class="card-body">
-                <img src="/media/{{ user.avatar }}" alt="">
-                <form id="edit_profile_form" action="{% url 'auth:register' %}" method="POST" enctype="multipart/form-data">
+                {% if user.avatar %}
+                    <img class="d-block mx-auto w-50 border rounded-circle" src="/media/{{ user.avatar }}" alt="">
+                {% endif %}
+                <form id="edit_profile_form" action="{% url 'auth:edit' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %} {{ edit_form.as_p }}
                 </form>
             </div>

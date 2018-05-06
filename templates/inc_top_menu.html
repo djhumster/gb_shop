@@ -29,20 +29,20 @@
             </form>
             <div class="navbar-nav">
                 <a class="nav-item nav-link d-none d-lg-inline" href="{% url 'shopping_cart:view' %}">
-                    {% if shopping_cart_count %}
+                    {% if shopping_cart.0.products_quantity %}
                         <span class="text-danger">
                             <i class="fas fa-cart-arrow-down"></i>
-                            <span class="badge badge-danger">{{ shopping_cart_count }}</span>
+                            <span class="badge badge-danger">{{ shopping_cart.0.products_quantity }}</span>
                         </span>
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="badge badge-secondary">{{ shopping_cart_count }}</span>
+                        <span class="badge badge-secondary">0</span>
                     {% endif %}
                 </a>
                 <a class="nav-item nav-link btn btn-sm btn-warning d-lg-none mt-2 mb-1" href="#">
                     Корзина&nbsp;
-                    {% if shopping_cart_count %}
-                        <i class="fas fa-cart-arrow-down"></i> - товаров: {{ shopping_cart_count }}
+                    {% if shopping_cart.0.products_quantity %}
+                        <i class="fas fa-cart-arrow-down"></i> - товаров: {{ shopping_cart.0.products_quantity }}
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
                     {% endif %}

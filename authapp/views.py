@@ -3,7 +3,7 @@ from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditF
 from django.contrib import auth
 from django.urls import reverse
 
-from mainapp.views import make_menu
+from mainapp.views import make_menu, shopping_cart
 
 def login(request):
     title = 'вход'
@@ -67,11 +67,12 @@ def edit(request):
 
             return HttpResponseRedirect(reverse('auth:edit'))
     else:
-        edit_form = ShopUserEditForm()
+        edit_form = ShopUserEditForm(instance=request.user)
 
     context = {
         'title': title,
         'edit_form': edit_form,
+        'shopping_cart': shopping_cart(request.user),
         'links_menu': make_menu()
     }
 

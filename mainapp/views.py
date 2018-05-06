@@ -14,7 +14,7 @@ def make_menu():
             'href': 'products:category',
             'cat_url': cat.url_path,
             'name': cat.name,
-            'cat_id': int(cat.id)
+            'cat_id': cat.id
         })
 
     links.append({
@@ -24,22 +24,19 @@ def make_menu():
 
     return links
 
-def shopping_cart_count(request):
-    cart_count = 0
+def shopping_cart(user=None):
+    cart = []
 
-    if request.user.is_authenticated:
-        cart = ShoppingCart.objects.filter(user=request.user)
-
-        for item in cart:
-            cart_count += item.quantity
-
-    return cart_count
+    if user.is_authenticated:
+        cart = ShoppingCart.objects.filter(user=user)
+    
+    return cart
 
 def index_view(request):
     context = {
         'title': 'главная',
         'links_menu': make_menu(),
-        'shopping_cart_count': shopping_cart_count(request)
+        'shopping_cart': shopping_cart(request.user)
     }
 
     return render(request, 'mainapp/index.html', context)
@@ -61,7 +58,7 @@ def category_view(request, cat_url=None):
         'title': title,
         'links_menu': links_menu,
         'products': products,
-        'shopping_cart_count': shopping_cart_count(request)
+        'shopping_cart': shopping_cart(request.user)
     }
     
     return render(request, 'mainapp/category.html', context)
@@ -70,7 +67,7 @@ def contacts_view(request):
     context = {
         'title': 'контакты',
         'links_menu': make_menu(),
-        'shopping_cart_count': shopping_cart_count(request)
+        'shopping_cart': shopping_cart(request.user)
     }
 
     return render(request, 'mainapp/contacts.html', context)
@@ -79,13 +76,13 @@ def product_view(request, cat_url=None, pk=None):
     if not pk:
         return HttpResponseRedirect(reverse('index'))
     
-    product = get_object_or_404(Product, pk=int(pk))
+    product = get_object_or_404(Product, pk=pk)
     title = product.name
 
     context = {
         'title': title,
         'links_menu': make_menu(),
-        'shopping_cart_count': shopping_cart_count(request),
+        'shopping_cart': shopping_cart(request.user),
         'product': product
     }
 
