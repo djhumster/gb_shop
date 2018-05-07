@@ -9,6 +9,8 @@ def login(request):
     title = 'вход'
 
     login_form = ShopUserLoginForm(data=request.POST or None)
+
+    next = request.GET['next'] if 'next' in request.GET.keys() else None
     
     if request.method == 'POST' and login_form.is_valid():
         usrn = request.POST['username']
@@ -18,13 +20,17 @@ def login(request):
 
         if user and user.is_active:
             auth.login(request, user)
-
-            return HttpResponseRedirect(reverse('index'))
+            
+            if 'next' in request.POST.keys():
+                return HttpResponseRedirect(request.POST['next'])
+            else:
+                return HttpResponseRedirect(reverse('index'))
 
     context = {
         'title': title,
         'login_form': login_form,
-        'links_menu': make_menu()
+        'links_menu': make_menu(),
+        'next': next
     }
 
     return render(request, 'authapp/login.html', context)

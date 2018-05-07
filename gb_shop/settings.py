@@ -124,6 +124,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
+LOGIN_URL = '/auth/login/'
+
 if DEBUG is True:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),

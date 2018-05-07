@@ -2,36 +2,15 @@
 {% load static %}
 {% block main %}
 <div class="card shadow-sm">
-    <div class="card-header"><h5 class="card-title text-center">{{ title|title }}</h5></div>
-    <div class="card-body pt-0">
-    {% for item in shopping_cart %}
-        <div class="row border-bottom">
-            <div class="col-md-6 p-2">
-                <div class="media">
-                    <img class="w-25 mr-2" src="{% if item.product.image %}
-                        {{ item.product.image.url }}
-                    {% endif %}" alt="product.name">
-                    <div class="media-body">
-                        <a href="{% url 'products:product' item.product.category.url_path item.product.pk %}" target="_blank">
-                        {% if item.product.brand|lower != 'noname' %}
-                            {{ item.product.brand|capfirst }}
-                        {% endif %}
-                        {{ item.product.name }}
-                        </a>
-                        <p class="text-muted small">{{ item.product.short_desc }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mt-2 mt-md-0 d-flex align-items-center justify-content-center">
-                <input class="form-control w-50" type="number" name="{{ item.pk }}" value="{{ item.quantity }}" min=0>
-            </div>
-            <div class="col-md-3 my-2 my-md-0 d-flex flex-column align-items-center justify-content-center">
-                <span class="mb-2">{{ item.total_product_sum }}&nbsp;<i class="fas fa-ruble-sign"></i></span>
-                <a href="{% url 'shopping_cart:remove' item.pk %}" class="btn btn-sm btn-danger px-3">Удалить&nbsp;<i class="far fa-trash-alt"></i></a>
-            </div>
-        </div>
-    {% endfor %}
-    <h5 class="mt-4 text-right">Итого: {{ shopping_cart.0.total_cart_sum }}&nbsp;<i class="fas fa-ruble-sign"></i></h5>
+    <div class="card-header">
+        <h5 class="card-title text-center mb-0">{{ title|title }}</h5>
+    </div>
+    <div class="cart-list card-body pt-0">
+        {% include 'shopcartapp/inc_cart_list.html' %}
     </div>
 </div>
+{% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'js/shopping_cart.js' %}"></script>
 {% endblock %}

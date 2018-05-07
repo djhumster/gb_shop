@@ -12,6 +12,7 @@
                 <form id="login_form" action="{% url 'auth:login' %}" method="POST">
                     {% csrf_token %}
                     {{ login_form.as_p }}
+                    <input type="hidden" name="next" value="{{ next }}">
                 </form>
             </div>
             <div class="card-footer text-center">
