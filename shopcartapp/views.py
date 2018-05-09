@@ -63,12 +63,19 @@ def cart_edit(request):
         pk = int(request.POST['pk'])
         quantity = int(request.POST['quantity'])
         cart_item = ShoppingCart.objects.get(pk=pk)
-
-        if quantity >= 0:
+        err = {}
+        
+        if 0 < quantity <= cart_item.product.quantity or quantity == 0:
             cart_item.quantity = quantity
             cart_item.save()
-
+        else:
+            err = {
+                'item_pk': cart_item.pk,
+                'msg': 'кол-во товара ограничего'
+            }
+        
         context = {
+            'err_quantity': err,
             'shopping_cart': shopping_cart(request.user).order_by('product__category'),
         }
 

@@ -13,8 +13,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 mt-2 mt-md-0 d-flex align-items-center justify-content-center">
+    <div class="col-md-3 mt-2 mt-md-0 d-flex flex-column align-items-center justify-content-center">
         <input class="form-control w-50" type="number" name="{{ item.pk }}" value="{{ item.quantity }}" min=0>
+        {% if err_quantity and err_quantity.item_pk == item.pk %}
+            <span class="small text-danger">{{ err_quantity.msg }}</span>
+        {% endif %}
     </div>
     <div class="col-md-3 my-2 my-md-0 pr-lg-4 d-flex align-items-center justify-content-center justify-content-md-end">
         <span>{{ item.total_product_sum }}&nbsp;
