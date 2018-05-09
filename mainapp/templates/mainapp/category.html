@@ -26,7 +26,15 @@
                 <p class="card-text">{{ product.short_desc }}</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning btn-block">Купить&nbsp;<i class="fas fa-cart-plus"></i></a>
+                    {% if product.quantity > 0 %}
+                    <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning btn-block">Купить&nbsp;
+                        <i class="fas fa-cart-plus"></i>
+                    </a>
+                {% else %}
+                    <button type="button" class="btn btn-warning btn-block" disabled>Нет в наличии&nbsp;
+                        <i class="far fa-frown"></i>
+                    </button>
+                {% endif %}
             </div>
         </div>
     </div>

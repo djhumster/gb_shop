@@ -12,7 +12,7 @@
         <h3>
             {% if product.brand|stringformat:'s'|lower != 'noname' %} {{ product.brand|capfirst }} {% endif %} {{ product.name }}
         </h3>
-        <div class="row mb-3 align-items-center">
+        <div class="row mb-2 align-items-center">
             <h4 class="text-muted col-sm mb-sm-0">{{ product.price }}
                 <i class="fas fa-ruble-sign"></i>
             </h4>
@@ -22,11 +22,29 @@
                 </a>
             </div>
         </div>
+        <div class="mb-2 d-flex align-items-center">
+            <small>на складе:&nbsp;</small>
+            {% if product.quantity == 0 %}
+            <i class="fas fa-battery-empty"></i>
+            {% elif product.quantity < 10 %}
+            <i class="fas fa-battery-quarter text-danger"></i>
+            {% elif product.quantity < 30 %}
+            <i class="fas fa-battery-half text-warning"></i>
+            {% else %}
+            <i class="fas fa-battery-full text-success"></i>
+            {% endif %}
+        </div>
         <p>{{ product.short_desc }}</p>
         <p>{{ product.full_desc }}</p>
-        <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning px-4 d-none d-lg-inline">Купить&nbsp;
+        {% if product.quantity > 0 %}
+            <a href="{% url 'shopping_cart:add' product.pk %}" class="btn btn-warning px-4 d-none d-lg-inline">Купить&nbsp;
                 <i class="fas fa-cart-plus"></i>
-        </a>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-warning px-4 d-none d-lg-inline" disabled>Нет в наличии&nbsp;
+                <i class="far fa-frown"></i>
+            </button>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
