@@ -38,6 +38,15 @@ a.showCase:hover {
 }
 
 .img-product {width: 100%;}
+
+.remove-btn {
+  padding: 0;
+  border: none;
+  background: none;
+}
+.remove-btn:hover {
+  cursor: pointer;
+}
 /*
    * Dummy devices (replace them with your own or something else entirely!)
    */

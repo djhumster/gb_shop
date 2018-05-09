@@ -39,10 +39,17 @@ def cart_add(request, pk=None):
 
 @login_required
 def cart_remove(request, pk=None):
-    item = get_object_or_404(ShoppingCart, pk=pk)
-    item.delete()
+    if request.is_ajax():
+        item = get_object_or_404(ShoppingCart, pk=pk)
+        item.delete()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        context = {
+            'shopping_cart': shopping_cart(request.user).order_by('product__category'),
+        }
+
+        result = render_to_string('shopcartapp/inc_cart_list.html', context)
+
+        return JsonResponse({'result': result})
 
 @login_required
 def cart_edit(request, pk=None, quantity=None):

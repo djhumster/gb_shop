@@ -20,9 +20,9 @@
         <span>{{ item.total_product_sum }}&nbsp;
             <i class="fas fa-ruble-sign"></i>
         </span>
-        <a href="{% url 'shopping_cart:remove' item.pk %}" class="text-danger ml-3 mx-lg-4" title="удалить">
+        <button type="button" class="remove-btn text-danger ml-3 mx-lg-4" name="{{ item.pk }}" title="удалить">
             <i class="far fa-times-circle"></i>
-        </a>
+        </button>
     </div>
 </div>
 {% endfor %}
