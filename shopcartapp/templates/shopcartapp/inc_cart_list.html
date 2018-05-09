@@ -31,7 +31,9 @@
         <h5 class="my-0 my-md-4 text-center text-md-right">Итого: </h5>
     </div>
     <div class="col-md-3 mt-2 mt-md-0 d-flex align-items-center justify-content-center">
-        <h5 class="my-0 my-md-4">{{ shopping_cart.0.products_quantity }} шт.</h5>
+        <h5 class="my-0 my-md-4">
+            <span id="cart-quantity-bottom">{{ shopping_cart.0.products_quantity }}</span> шт.
+        </h5>
     </div>
     <div class="col-md-3 my-2 my-md-0 d-flex flex-column align-items-center justify-content-center">
         <h5 class="my-0 my-md-4">{{ shopping_cart.0.total_cart_sum }}&nbsp;

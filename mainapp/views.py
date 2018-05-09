@@ -28,7 +28,7 @@ def shopping_cart(user=None):
     cart = []
 
     if user.is_authenticated:
-        cart = ShoppingCart.objects.filter(user=user)
+        cart = ShoppingCart.objects.filter(user=user, quantity__gt=0)
     
     return cart
 

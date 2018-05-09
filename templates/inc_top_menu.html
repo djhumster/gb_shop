@@ -32,7 +32,7 @@
                     {% if shopping_cart.0.products_quantity %}
                         <span class="text-danger">
                             <i class="fas fa-cart-arrow-down"></i>
-                            <span class="badge badge-danger">{{ shopping_cart.0.products_quantity }}</span>
+                            <span class="badge badge-danger cart-quantity-top">{{ shopping_cart.0.products_quantity }}</span>
                         </span>
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
@@ -42,7 +42,8 @@
                 <a class="nav-item nav-link btn btn-sm btn-warning d-lg-none mt-2 mb-1" href="#">
                     Корзина&nbsp;
                     {% if shopping_cart.0.products_quantity %}
-                        <i class="fas fa-cart-arrow-down"></i> - товаров: {{ shopping_cart.0.products_quantity }}
+                        <i class="fas fa-cart-arrow-down"></i> - товаров: 
+                        <span class="cart-quantity-top">{{ shopping_cart.0.products_quantity }}</span>
                     {% else %}
                         <i class="fas fa-shopping-cart"></i>
                     {% endif %}

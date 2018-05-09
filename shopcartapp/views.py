@@ -1,13 +1,15 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.http import JsonResponse
 
 from shopcartapp.models import ShoppingCart
 from mainapp.models import Product
 from mainapp.views import make_menu, shopping_cart
+
 
 @login_required
 def cart(request):
@@ -38,10 +40,13 @@ def cart_add(request, pk=None):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
-def cart_remove(request, pk=None):
-    if request.is_ajax():
+@ensure_csrf_cookie
+def cart_remove(request):
+    if request.is_ajax() and request.method == 'POST':
+        pk = int(request.POST['pk'])
         item = get_object_or_404(ShoppingCart, pk=pk)
-        item.delete()
+        item.quantity = 0
+        item.save()
 
         context = {
             'shopping_cart': shopping_cart(request.user).order_by('product__category'),
@@ -52,20 +57,21 @@ def cart_remove(request, pk=None):
         return JsonResponse({'result': result})
 
 @login_required
-def cart_edit(request, pk=None, quantity=None):
-    if request.is_ajax():
+@ensure_csrf_cookie
+def cart_edit(request):
+    if request.is_ajax() and request.method == 'POST':
+        pk = int(request.POST['pk'])
+        quantity = int(request.POST['quantity'])
         cart_item = ShoppingCart.objects.get(pk=pk)
 
-        if quantity > 0:
+        if quantity >= 0:
             cart_item.quantity = quantity
             cart_item.save()
-        else:
-            cart_item.delete()
 
         context = {
             'shopping_cart': shopping_cart(request.user).order_by('product__category'),
         }
 
         result = render_to_string('shopcartapp/inc_cart_list.html', context)
-
-        return JsonResponse({'result': result})
+        
+        return JsonResponse({'result':result})
