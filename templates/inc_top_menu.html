@@ -3,7 +3,7 @@
         <a class="navbar-brand" href="{% url 'index' %}">
             <b>Geek</b>Shop
         </a>
-        <span href="#" class="navbar-brand d-none d-md-block text-primary ml-lg-5">
+        <span href="#" class="navbar-brand d-none d-md-block text-primary m-0">
             <span class="small">+7 (812) </span>
             <b>111-22-33</b>
             <small class="text-muted d-none d-xl-inline"> с 10 до 22 ежедневно</small>
@@ -56,7 +56,12 @@
                         {{ user.first_name|default:user.get_username }}
                         &nbsp;<i class="fas fa-user"></i>
                     </a>
-                    <a class="nav-item nav-link btn btn-sm btn-danger px-3 mt-1 mt-lg-0 text-white" href="{% url 'auth:logout' %}">
+                    {% if user.is_superuser %}
+                        <a class="nav-item nav-link btn btn-sm btn-primary px-3 mx-1 mt-1 mt-lg-0 text-white" href="{% url 'admin:cat-list' %}">
+                            <i class="fas fa-unlock-alt"></i>
+                        </a>
+                    {% endif %}
+                    <a class="nav-item nav-link btn btn-sm btn-danger mt-1 mt-lg-0 text-white" href="{% url 'auth:logout' %}">
                         Выход&nbsp;
                         <i class="fas fa-sign-out-alt"></i>
                     </a>

@@ -1,14 +1,14 @@
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-from shopcartapp.models import ShoppingCart
 from mainapp.models import Product
 from mainapp.views import make_menu, shopping_cart
+from shopcartapp.models import ShoppingCart
 
 
 @login_required

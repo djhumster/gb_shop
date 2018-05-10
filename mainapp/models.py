@@ -5,6 +5,7 @@ class Category(models.Model):
     name = models.CharField(verbose_name='Имя', max_length=64, unique=True)
     url_path = models.CharField(verbose_name='Имя категории в ссылке (eng)', max_length=48)
     desc = models.TextField(verbose_name='Описание', blank=True)
+    is_active = models.BooleanField(verbose_name='активна', default=True)
 
     def __str__(self):
         return self.name
@@ -13,6 +14,7 @@ class Category(models.Model):
 class Brand(models.Model):
     name = models.CharField(verbose_name='название', max_length=64)
     logo = models.ImageField(verbose_name='логотип', upload_to='brand_logos', blank=True)
+    is_active = models.BooleanField(verbose_name='активен', default=True)
 
     def __str__(self):
         return self.name
@@ -27,6 +29,7 @@ class Product(models.Model):
     image = models.ImageField(verbose_name='Изображение', upload_to='products', blank=True)
     price = models.DecimalField(verbose_name='Цена', max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
+    is_active = models.BooleanField(verbose_name='активен', default=True)
 
     def __str__(self):
         return f'({self.category.name}) {self.brand} {self.name}'

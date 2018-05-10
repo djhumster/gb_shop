@@ -13,20 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-import mainapp.views as mainapp
-# TODO: убрать в продакшене
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+
+import mainapp.views as mainapp
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('', mainapp.index_view, name='index'),
     path('products/', include('mainapp.urls', namespace='products')),
     path('contacts/', mainapp.contacts_view, name='contacts'),
     path('auth/', include('authapp.urls', namespace='auth')),
-    path('cart/', include('shopcartapp.urls', namespace='shopping_cart'))
+    path('cart/', include('shopcartapp.urls', namespace='shopping_cart')),
+    path('admin/', include('adminapp.urls', namespace='admin'))
 ]
 
 if settings.DEBUG is True:

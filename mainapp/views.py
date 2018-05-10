@@ -1,13 +1,14 @@
 from django.http import Http404
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.urls import reverse
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
+
 from mainapp.models import Category, Product
 from shopcartapp.models import ShoppingCart
 
 
 def make_menu():
     links = []
-    category = Category.objects.all()
+    category = Category.objects.filter(is_active=True)
 
     for cat in category:
         links.append({
@@ -48,7 +49,7 @@ def category_view(request, cat_url=None):
     for link in links_menu:
         if link.get('cat_url') == cat_url:
             title = link['name']
-            products = Product.objects.filter(category__pk=link['cat_id']).order_by('name')
+            products = Product.objects.filter(category__pk=link['cat_id'], is_active=True).order_by('name')
             break
     
     if title is None:
