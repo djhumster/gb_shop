@@ -10,9 +10,7 @@
         {% endblock %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {# <link rel="stylesheet" media="screen" href="{% static 'css/bootstrap.min.css' %}" /> #}
-    {# Для поддержки IntelliSense TODO: убрать! #}
-    <link rel="stylesheet" media="screen" href="../../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" media="screen" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -20,10 +18,18 @@
 <body>
     <div id="wrapper" class="d-flex flex-column">
         <header id="main_header" class="bg-secondary text-white py-3 shadow-sm">
-            <div class="container">
-                <h4 class="m-0">GeekShop - 
-                    <a class="text-white" href="{% url 'admin:cat-list' %}">Панель управления</a>
+            <div class="container d-flex justify-content-between">
+                <h4 class="m-0">
+                    <a class="text-light" href="{% url 'index' %}" target="_blank">GeekShop</a>&nbsp;->&nbsp;
+                    <a class="text-light" href="{% url 'admin:index' %}">Панель управления</a>
+                    {% if title %}
+                    &nbsp;->&nbsp;{{ title|title }}
+                    {% endif %}
                 </h4>
+                <a class="btn btn-sm btn-danger mt-1 mt-lg-0 text-white" href="{% url 'auth:logout' %}">
+                    Выход&nbsp;
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
             </div>
         </header>
 
@@ -32,8 +38,10 @@
             {% endblock %}
         </main>
 
-        <footer id="main_footer" class="bg-light py-1">
-
+        <footer id="main_footer" class="bg-light py-2">
+            <div class="container text-center small">
+                {% now 'r' %}
+            </div>
         </footer>
 
     {% block javascript %}    

@@ -1,6 +1,9 @@
 from django import forms
 
 from mainapp.models import Category
+from authapp.models import ShopUser
+from authapp.forms import ShopUserEditForm
+
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -13,3 +16,9 @@ class CategoryForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+
+
+class ShopUserAdminEditForm(ShopUserEditForm):
+    class Meta:
+        model = ShopUser
+        fields = '__all__'

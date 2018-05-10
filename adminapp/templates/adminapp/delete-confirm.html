@@ -4,14 +4,18 @@
 <div class="col-md-6">
     <form method="POST">
         {% csrf_token %}
-        {{ category.name }}
+        {% if category %}
+            категория: {{ category.name }}
+        {% elif user %}
+            пользователь: {{ user.get_username }}
+        {% endif %}
         <p>Подтвердить удаление?<br>
             <span class="small text-danger">(это действие нельзя отвенить)</span>
         </p>
         <button type="submit" class="btn btn-danger px-3">
             Да&nbsp;<i class="far fa-check-circle"></i>
         </button>
-        <a class="btn btn-primary px-3" href="{% url 'admin:cat-list' %}">
+        <a class="btn btn-primary px-3" href="{{ request.META.HTTP_REFERER }}">
             Нет&nbsp;<i class="fas fa-ban"></i>
         </a> 
 </form>

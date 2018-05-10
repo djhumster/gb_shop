@@ -5,24 +5,22 @@
     <table class="table">
         <tbody>
 
-        {% for category in categories %}
+        {% for user in users %}
             <tr>
                 <td>
-                    <a href="#">
-                    {% if category.is_active %}
-                        {{ category.name }}
+                    {% if user.is_active %}
+                        {{ user.get_username }}  {{ user.fistname }}
                     {% else %}
-                        <span class="text-muted font-italic">{{ category.name }}</span>
+                        <span class="text-muted font-italic">{{ user.get_username }}  {{ user.fistname }}</span>
                     {% endif %}
-                    </a>
                 </td>
                 <td>
-                    <a class="text-primary" href="{% url 'admin:cat-edit' category.pk %}" title="редактировать">
+                    <a class="text-primary" href="{% url 'admin:user-edit' user.pk %}" title="редактировать">
                         <i class="fas fa-edit"></i>
                     </a>
                 </td>
                 <td>
-                    <a class="text-danger" href="{% url 'admin:cat-remove' category.pk %}" title="удалить">
+                    <a class="text-danger" href="{% url 'admin:user-remove' user.pk %}" title="удалить">
                         <i class="far fa-times-circle"></i>
                     </a>
                 </td>
@@ -32,7 +30,7 @@
         </tbody>
     </table>
 
-    <a href="{% url 'admin:cat-create' %}" class="btn btn-success px-3">
+    <a href="{% url 'admin:user-create' %}" class="btn btn-success px-3">
         добавить&nbsp;<i class="far fa-plus-square"></i>
     </a>
 </div>
