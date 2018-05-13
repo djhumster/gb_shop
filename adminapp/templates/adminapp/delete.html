@@ -4,10 +4,10 @@
 <div class="col-md-6">
     <form method="POST">
         {% csrf_token %}
-        {% if category %}
-            категория: {{ category.name }}
-        {% elif user %}
-            пользователь: {{ user.get_username }}
+        {% if mode == 'category' %}
+            категория: {{ object.name }}
+        {% elif mode == 'user' %}
+            пользователь: {{ object.first_name|default:object.get_username }} {{ object.last_name }}
         {% endif %}
         <p>Подтвердить удаление?<br>
             <span class="small text-danger">(это действие нельзя отвенить)</span>

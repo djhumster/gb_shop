@@ -1,0 +1,66 @@
+{% extends 'adminapp/base.html '%}
+
+{% block main %}
+<div class="row w-100 justify-content-between mb-3">
+    <a href="
+    {% if mode == 'cat_list' %}
+        {% url 'admin:cat-create' %}
+    {% elif mode == 'user_list' %}
+        {% url 'admin:user-create' %}
+    {% endif %}
+        " class="btn btn-success px-3">
+            добавить&nbsp;<i class="far fa-plus-square"></i>
+        </a>
+</div>
+<div class="col-md-6">
+    <table class="table">
+        <tbody>
+
+        {% for obj in object_list %}
+            <tr>
+                <td>
+
+                {% if mode == 'cat_list' %}
+                    <a href="#" class="{% if not obj.is_active %}
+                        text-muted font-italic
+                            {% endif %}">
+                        {{ obj.name }}
+                    </a>
+                {% elif mode == 'user_list' %}
+                    <span class="{% if not obj.is_active %}
+                    text-muted font-italic
+                        {% endif %}">
+                        {{ obj.first_name|default:obj.get_username }} {{ obj.last_name }}
+                    </span>
+                {% endif %}
+
+                </td>
+                <td>
+                    <a class="text-primary" href="
+                {% if mode == 'cat_list' %}
+                    {% url 'admin:cat-edit' obj.pk %}
+                {% elif mode == 'user_list' %}
+                    {% url 'admin:user-edit' obj.pk %}
+                {% endif %}
+                    " title="редактировать">
+                        <i class="fas fa-edit"></i>
+                    </a>     
+                </td>
+                <td>
+                    <a class="text-danger" href="
+                {% if mode == 'cat_list' %}
+                    {% url 'admin:cat-remove' obj.pk %}
+                {% elif mode == 'user_list' %}
+                    {% url 'admin:user-remove' obj.pk %}
+                {% endif %}
+                    " title="удалить">
+                        <i class="far fa-times-circle"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+{% endblock %}
