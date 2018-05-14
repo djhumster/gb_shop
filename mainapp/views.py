@@ -5,7 +5,7 @@ from django.urls import reverse
 from mainapp.models import Category, Product
 from shopcartapp.models import ShoppingCart
 
-
+# TODO: убрать в контекстный процессор
 def make_menu():
     links = []
     category = Category.objects.filter(is_active=True)
@@ -49,7 +49,7 @@ def category_view(request, cat_url=None):
     for link in links_menu:
         if link.get('cat_url') == cat_url:
             title = link['name']
-            products = Product.objects.filter(category__pk=link['cat_id'], is_active=True).order_by('name')
+            products = Product.objects.filter(category__pk=link['cat_id'], is_active=True, brand__is_active=True).order_by('name')
             break
     
     if title is None:

@@ -2,28 +2,55 @@
 
 {% block main %}
 <div class="row w-100 justify-content-between align-items-center mb-3">
-    <a href="#" class="btn btn-success px-3">
+    <a href="{% url 'admin:product-create' %}" class="btn btn-success px-3">
         добавить&nbsp;<i class="far fa-plus-square"></i>
     </a>
     {% if is_paginated %}
+        <form method="GET">
+            <input type="hidden" name="category" value="{{ category }}">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">товаров на странице:</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="paginate_by" id="paginate_by" onchange="this.form.submit()">
+                    <option value="25" onclick="this.form.submit()" {% if paginate_by|add:'0' == 25 %}selected{% endif %}>25</option>
+                    <option value="50"{% if paginate_by|add:'0' == 50 %}selected{% endif %}>50</option>
+                    <option value="100"{% if paginate_by|add:'0' == 100 %}selected{% endif %}>100</option>
+                </select>
+            </div>
+        </form>
         <div class="adm-paginator">
             {% if 2 < page_obj.number %}
-            <a href="?page=1"><i class="fas fa-fast-backward"></i></a>
+            <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page=1">
+                <i class="fas fa-fast-backward"></i>
+            </a>
             {% endif %}
             {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-step-backward"></i></a>
+                <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page={{ page_obj.previous_page_number }}">
+                    <i class="fas fa-step-backward"></i>
+                </a>
             {% endif %}
             <span class="small">
                 {{ page_obj.number }} из {{ page_obj.paginator.num_pages   }}
             </span>
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-step-forward"></i></a>
+                <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page={{ page_obj.next_page_number }}">
+                    <i class="fas fa-step-forward"></i>
+                </a>
                 {% if page_obj.next_page_number < page_obj.paginator.num_pages %}
-                    <a href="?page=last"><i class="fas fa-fast-forward"></i></a>
+                    <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page=last">
+                        <i class="fas fa-fast-forward"></i>
+                    </a>
                 {% endif %}
             {% endif %}
         </div>
     {% endif %}
+</div>
+<div class="row w-100 justify-content-around align-items-center mb-3">
+{% for cat in categories %}
+    <a href="{% url 'admin:product-list' %}?category={{ cat.pk }}" class="mx-1">{{ cat.name }}</a>
+{% endfor %}
+<a href="{% url 'admin:product-list' %}" class="mx-1">все</a>
 </div>
 <div class="col-12">
     <table class="table table-borderless table-hover">
@@ -42,7 +69,14 @@
         {% for obj in object_list %}
             <tr>
                 <th scope="row">{{ obj.pk }}</th>
-                <td>{{ obj.name }}</td>
+                <td>
+                    <a href="{% url 'admin:product-edit' obj.pk %}"
+                    {% if not obj.is_active %}
+                        class="text-muted font-italic"
+                    {% endif %}>
+                        {{ obj.name }}
+                    </a>
+                </td>
                 <td>{% if obj.brand|lower == 'noname' %}
                         -
                     {% else %}

@@ -1,13 +1,13 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DeleteView, UpdateView
-from django.views.generic.list import ListView
+from django.views.generic.list import ListView, MultipleObjectMixin
 
-from adminapp.forms import CategoryForm, ShopUserAdminEditForm
+from adminapp.forms import (BrandForm, CategoryForm, ProductForm,
+                            ShopUserAdminEditForm)
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
-from mainapp.models import Category, Product
+from mainapp.models import Brand, Category, Product
 
 
 class UserIsStaffMixin(UserPassesTestMixin):
@@ -18,6 +18,24 @@ class UserIsStaffMixin(UserPassesTestMixin):
 class UserIsSuperUserMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser
+
+
+class PaginateByMixin(MultipleObjectMixin):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['paginte_by'] = self.request.GET.get('paginate_by', '')
+
+        return context
+
+    def get_paginate_by(self, queryset):
+        paginate_by = self.request.GET.get('paginate_by')
+
+        if paginate_by:
+            paginate_by = int(paginate_by)
+        else:
+            paginate_by = 25
+
+        return paginate_by
 
 
 class CategoryListView(UserIsStaffMixin, ListView):
@@ -45,7 +63,7 @@ class CategoryDeleteView(UserIsSuperUserMixin, DeleteView):
     success_url = reverse_lazy('admin:cat-list')
 
 
-class UserListView(UserIsSuperUserMixin, ListView):
+class UserListView(UserIsSuperUserMixin, PaginateByMixin, ListView):
     model = ShopUser
     template_name = 'adminapp/list.html'
 
@@ -70,19 +88,67 @@ class UserDeleteView(UserIsSuperUserMixin, DeleteView):
     success_url = reverse_lazy('admin:user-list')
 
 
-class ProductListView(UserIsStaffMixin, ListView):
-    model = Product
+class ProductListView(UserIsStaffMixin, PaginateByMixin, ListView):
     template_name = 'adminapp/product_list.html'
-    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.request.GET.get('category', '')
+        context['categories'] = Category.objects.filter(is_active=True)
+
+        return context
+
+    def get_queryset(self):
+        category = self.request.GET.get('category')
+        if category:
+            queryset = Product.objects.filter(category__pk=int(category))
+        else:
+            queryset = Product.objects.all()
+
+        return queryset
 
 
 class ProductCreateView(UserIsStaffMixin, CreateView):
-    pass
+    model = Product
+    template_name = 'adminapp/edit.html'
+    success_url = reverse_lazy('admin:product-list')
+    form_class = ProductForm
 
 
 class ProductUpdateView(UserIsStaffMixin, UpdateView):
-    pass
+    model = Product
+    template_name = 'adminapp/edit.html'
+    success_url = reverse_lazy('admin:product-list')
+    form_class = ProductForm
 
 
 class ProductDeleteView(UserIsSuperUserMixin, DeleteView):
-    pass
+    model = Product
+    template_name = 'adminapp/delete.html'
+    success_url = reverse_lazy('admin:product-list')
+
+
+class BrandListView(ListView):
+    model = Brand
+    template_name = 'adminapp/list.html'
+
+
+class BrandCreateView(CreateView):
+    model = Brand
+    template_name = 'adminapp/edit.html'
+    success_url = reverse_lazy('admin:brand-list')
+    form_class = BrandForm
+
+
+class BrandUpdateView(UpdateView):
+    model = Brand
+    template_name = 'adminapp/edit.html'
+    success_url = reverse_lazy('admin:brand-list')
+    form_class = BrandForm
+
+
+class BrandDeleteView(DeleteView):
+    model = Brand
+    template_name = 'adminapp/delete.html'
+    success_url = reverse_lazy('admin:brand-list')
+    form_class = BrandForm

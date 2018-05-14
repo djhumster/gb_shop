@@ -27,4 +27,18 @@ urlpatterns = [
         extra_context={'title': 'пользователи/удаление', 'mode': 'user'}), name='user-remove'),
     path('product-list/', adminapp.ProductListView.as_view(
         extra_context={'title': 'продукты'}), name='product-list'),
+    path('product-create/', adminapp.ProductCreateView.as_view(
+        extra_context={'title': 'продукты/создание'}), name='product-create'),
+    path('product-edit/<int:pk>/', adminapp.ProductUpdateView.as_view(
+        extra_context={'title': 'продукты/редактирование', 'mode': 'product'}), name='product-edit'),
+    path('product-remove/<int:pk>', adminapp.ProductDeleteView.as_view(
+        extra_context={'title': 'пользователи/удаление'}), name='product-remove'),
+    path('brand-list/', adminapp.BrandListView.as_view(
+        extra_context={'title': 'бренды', 'mode': 'brand_list'}), name='brand-list'),
+    path('brand-create/', adminapp.BrandCreateView.as_view(
+        extra_context={'title': 'бренды/создание'}), name='brand-create'),
+    path('brand-edit/<int:pk>/', adminapp.BrandUpdateView.as_view(
+        extra_context={'title': 'бренды/редактирование'}), name='brand-edit'),
+    path('brand-remove/<int:pk>/', adminapp.BrandDeleteView.as_view(
+        extra_context={'title': 'бренды/удаление'}), name='brand-remove'),
 ]
