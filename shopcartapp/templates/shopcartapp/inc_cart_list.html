@@ -1,3 +1,4 @@
+{% load extra_tags %}
 {% for item in shopping_cart %}
 <div class="row border-bottom">
     <div class="col-md-6 p-2">
@@ -20,7 +21,7 @@
         {% endif %}
     </div>
     <div class="col-md-3 my-2 my-md-0 pr-lg-4 d-flex align-items-center justify-content-center justify-content-md-end">
-        <span>{{ item.total_product_sum }}&nbsp;
+        <span>{{ item.total_product_sum|pprice }}&nbsp;
             <i class="fas fa-ruble-sign"></i>
         </span>
         <button type="button" class="remove-btn text-danger ml-3 mx-lg-4" name="{{ item.pk }}" title="удалить">
@@ -39,7 +40,7 @@
         </h5>
     </div>
     <div class="col-md-3 my-2 my-md-0 d-flex flex-column align-items-center justify-content-center">
-        <h5 class="my-0 my-md-4">{{ shopping_cart.0.total_cart_sum }}&nbsp;
+        <h5 class="my-0 my-md-4">{{ shopping_cart.0.total_cart_sum|pprice }}&nbsp;
             <i class="fas fa-ruble-sign"></i>
         </h5>
     </div>

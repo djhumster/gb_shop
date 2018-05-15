@@ -94,7 +94,6 @@ class ProductListView(UserIsStaffMixin, PaginateByMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.request.GET.get('category', '')
-        context['categories'] = Category.objects.filter(is_active=True)
         context['sort_by'] = self.request.GET.get('sort_by', '')
 
         return context

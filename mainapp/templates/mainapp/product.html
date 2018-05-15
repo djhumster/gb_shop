@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+{% load extra_tags %}
 
 {% block main %}
 <div class="row border border-light shadow-sm p-3">
@@ -13,7 +14,7 @@
             {% if product.brand|stringformat:'s'|lower != 'noname' %} {{ product.brand|capfirst }} {% endif %} {{ product.name }}
         </h3>
         <div class="row mb-2 align-items-center">
-            <h4 class="text-muted col-sm mb-sm-0">{{ product.price }}
+            <h4 class="text-muted col-sm mb-sm-0">{{ product.price|pprice }}
                 <i class="fas fa-ruble-sign"></i>
             </h4>
             <div class="col-sm d-lg-none">
@@ -47,4 +48,46 @@
         {% endif %}
     </div>
 </div>
+
+{% if same_products %}
+<h5 class="mt-4">Похожие продукты:</h5>
+<div class="row">
+
+    {% for same_product in same_products %}
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="
+                    {% if same_product.image %}
+                        {{ same_product.image.url }}
+                    {% endif %}" 
+                alt="{{ same_product.name }}" data-holder-rendered="true">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a class="card-link" href="{% url 'products:product' product.category.url_path same_product.pk %}">
+                        {% if same_product.brand|stringformat:'s'|lower != 'noname' %}
+                            {{ same_product.brand|capfirst }}
+                        {% endif %}
+                        {{ same_product.name }}
+                    </a>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ same_product.price|pprice }} <i class="fas fa-ruble-sign"></i></h6>
+                <p class="card-text">{{ same_product.short_desc }}</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                    {% if same_product.quantity > 0 %}
+                    <a href="{% url 'shopping_cart:add' same_product.pk %}" class="btn btn-warning btn-block">Купить&nbsp;
+                        <i class="fas fa-cart-plus"></i>
+                    </a>
+                {% else %}
+                    <button type="button" class="btn btn-warning btn-block" disabled>Нет в наличии&nbsp;
+                        <i class="far fa-frown"></i>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}
 {% endblock %}

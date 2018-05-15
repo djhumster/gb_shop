@@ -1,3 +1,6 @@
+import random
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import Http404
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.urls import reverse
@@ -5,25 +8,6 @@ from django.urls import reverse
 from mainapp.models import Category, Product
 from shopcartapp.models import ShoppingCart
 
-# TODO: убрать в контекстный процессор
-def make_menu():
-    links = []
-    category = Category.objects.filter(is_active=True)
-
-    for cat in category:
-        links.append({
-            'href': 'products:category',
-            'cat_url': cat.url_path,
-            'name': cat.name,
-            'cat_id': cat.id
-        })
-
-    links.append({
-        'href':'contacts',
-        'name':'контакты'
-    })
-
-    return links
 
 def shopping_cart(user=None):
     cart = []
@@ -33,32 +17,40 @@ def shopping_cart(user=None):
     
     return cart
 
+def get_same_products(pk=None, category=None):
+    products = Product.objects.filter(category__pk=category).exclude(pk=pk)
+    count = products.count()
+
+    if count < 3:
+        result = random.sample(list(products), count)
+    else:
+        result = random.sample(list(products), 3)
+    
+    return result
+
 def index_view(request):
     context = {
         'title': 'главная',
-        'links_menu': make_menu(),
         'shopping_cart': shopping_cart(request.user)
     }
 
     return render(request, 'mainapp/index.html', context)
     
-def category_view(request, cat_url=None):
-    title = None
-    links_menu = make_menu()
+def category_view(request, cat_url=None, page=1):
+    category = get_object_or_404(Category, url_path=cat_url)
+    products = Product.objects.filter(category=category, is_active=True, brand__is_active=True).order_by('name')
+    paginator = Paginator(products, per_page=9)
 
-    for link in links_menu:
-        if link.get('cat_url') == cat_url:
-            title = link['name']
-            products = Product.objects.filter(category__pk=link['cat_id'], is_active=True, brand__is_active=True).order_by('name')
-            break
-    
-    if title is None:
-        raise Http404('Категория не существует!')
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
 
     context = {
-        'title': title,
-        'links_menu': links_menu,
-        'products': products,
+        'title': category.name,
+        'products': products_paginator,
         'shopping_cart': shopping_cart(request.user)
     }
     
@@ -67,7 +59,6 @@ def category_view(request, cat_url=None):
 def contacts_view(request):
     context = {
         'title': 'контакты',
-        'links_menu': make_menu(),
         'shopping_cart': shopping_cart(request.user)
     }
 
@@ -79,9 +70,9 @@ def product_view(request, cat_url=None, pk=None):
 
     context = {
         'title': title,
-        'links_menu': make_menu(),
         'shopping_cart': shopping_cart(request.user),
-        'product': product
+        'product': product,
+        'same_products': get_same_products(pk=product.pk, category=product.category.pk)
     }
 
     return render(request, 'mainapp/product.html', context)

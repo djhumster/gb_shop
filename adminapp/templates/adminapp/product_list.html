@@ -1,4 +1,5 @@
 {% extends 'adminapp/base.html '%}
+{% load extra_tags %}
 
 {% block main %}
 <div class="row w-100 justify-content-between align-items-center mb-3">
@@ -48,8 +49,10 @@
     {% endif %}
 </div>
 <div class="row w-100 justify-content-around align-items-center mb-3">
-{% for cat in categories %}
-    <a href="{% url 'admin:product-list' %}?category={{ cat.pk }}" class="mx-1">{{ cat.name }}</a>
+{% for link in categories_links %}
+    <a href="{% url 'admin:product-list' %}?category={{ link.cat_id }}" class="mx-1">
+        {{ link.cat_name }}
+    </a>
 {% endfor %}
 <a href="{% url 'admin:product-list' %}" class="mx-1">все</a>
 </div>
@@ -110,7 +113,7 @@
                 </td>
                 <td>{{ obj.category }}</td>
                 <td>{{ obj.quantity }}</td>
-                <td>{{ obj.price }}</td>
+                <td>{{ obj.price|pprice }}</td>
             </tr>
         {% endfor %}
             

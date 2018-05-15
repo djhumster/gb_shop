@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from mainapp.models import Product
-from mainapp.views import make_menu, shopping_cart
+from mainapp.views import shopping_cart
 from shopcartapp.models import ShoppingCart
 
 
@@ -15,7 +15,6 @@ from shopcartapp.models import ShoppingCart
 def cart(request):
     context = {
         'title': 'корзина',
-        'links_menu': make_menu(),
         'shopping_cart': shopping_cart(request.user).order_by('product__category')
     }
     return render(request, 'shopcartapp/shoppingcart.html', context)

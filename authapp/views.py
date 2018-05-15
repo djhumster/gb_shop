@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from authapp.forms import (ShopUserEditForm, ShopUserLoginForm,
                            ShopUserRegisterForm)
-from mainapp.views import make_menu, shopping_cart
+from mainapp.views import shopping_cart
 
 
 def login(request):
@@ -31,7 +31,6 @@ def login(request):
     context = {
         'title': title,
         'login_form': login_form,
-        'links_menu': make_menu(),
         'next': next
     }
 
@@ -58,7 +57,6 @@ def register(request):
     context = {
         'title': title,
         'register_form': register_form,
-        'links_menu': make_menu()
     }
 
     return render(request, 'authapp/register.html', context)
@@ -81,7 +79,6 @@ def edit(request):
         'title': title,
         'edit_form': edit_form,
         'shopping_cart': shopping_cart(request.user),
-        'links_menu': make_menu()
     }
 
     return render(request, 'authapp/edit.html', context)
