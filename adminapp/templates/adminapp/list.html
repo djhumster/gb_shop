@@ -7,11 +7,12 @@
         {% url 'admin:cat-create' %}
     {% elif mode == 'user_list' %}
         {% url 'admin:user-create' %}
+    {% elif mode == 'brand_list' %}
+        {% url 'admin:brand-create' %}
     {% endif %}
         " class="btn btn-success px-3">
             добавить&nbsp;<i class="far fa-plus-square"></i>
     </a>
-    {% if is_paginated %}
     <form method="GET">
         <div class="input-group">
             <div class="input-group-prepend">
@@ -24,6 +25,7 @@
             </select>
         </div>
     </form>
+    {% if is_paginated %}
     <div class="adm-paginator">
         {% if 2 < page_obj.number %}
         <a href="?paginate_by={{ paginate_by }}&page=1">

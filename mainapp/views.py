@@ -74,9 +74,6 @@ def contacts_view(request):
     return render(request, 'mainapp/contacts.html', context)
 
 def product_view(request, cat_url=None, pk=None):
-    if not pk:
-        return HttpResponseRedirect(reverse('index'))
-    
     product = get_object_or_404(Product, pk=pk)
     title = product.name
 

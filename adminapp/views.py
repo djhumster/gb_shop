@@ -23,7 +23,7 @@ class UserIsSuperUserMixin(UserPassesTestMixin):
 class PaginateByMixin(MultipleObjectMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['paginte_by'] = self.request.GET.get('paginate_by', '')
+        context['paginate_by'] = self.request.GET.get('paginate_by', '')
 
         return context
 
@@ -95,15 +95,21 @@ class ProductListView(UserIsStaffMixin, PaginateByMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = self.request.GET.get('category', '')
         context['categories'] = Category.objects.filter(is_active=True)
+        context['sort_by'] = self.request.GET.get('sort_by', '')
 
         return context
 
     def get_queryset(self):
         category = self.request.GET.get('category')
+        sort_by = self.request.GET.get('sort_by')
+
         if category:
             queryset = Product.objects.filter(category__pk=int(category))
         else:
             queryset = Product.objects.all()
+
+        if sort_by:
+            queryset = queryset.order_by(sort_by)
 
         return queryset
 
@@ -151,4 +157,3 @@ class BrandDeleteView(DeleteView):
     model = Brand
     template_name = 'adminapp/delete.html'
     success_url = reverse_lazy('admin:brand-list')
-    form_class = BrandForm

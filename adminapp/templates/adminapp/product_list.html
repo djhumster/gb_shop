@@ -5,28 +5,29 @@
     <a href="{% url 'admin:product-create' %}" class="btn btn-success px-3">
         добавить&nbsp;<i class="far fa-plus-square"></i>
     </a>
-    {% if is_paginated %}
-        <form method="GET">
-            <input type="hidden" name="category" value="{{ category }}">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">товаров на странице:</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01" name="paginate_by" id="paginate_by" onchange="this.form.submit()">
-                    <option value="25" onclick="this.form.submit()" {% if paginate_by|add:'0' == 25 %}selected{% endif %}>25</option>
-                    <option value="50"{% if paginate_by|add:'0' == 50 %}selected{% endif %}>50</option>
-                    <option value="100"{% if paginate_by|add:'0' == 100 %}selected{% endif %}>100</option>
-                </select>
+    <form method="GET">
+        <input type="hidden" name="category" value="{{ category }}">
+        <input type="hidden" name="sort_by" value="{{ sort_by }}">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">товаров на странице:</label>
             </div>
-        </form>
+            <select class="custom-select" id="inputGroupSelect01" name="paginate_by" id="paginate_by" onchange="this.form.submit()">
+                <option value="25" onclick="this.form.submit()" {% if paginate_by|add:'0' == 25 %}selected{% endif %}>25</option>
+                <option value="50"{% if paginate_by|add:'0' == 50 %}selected{% endif %}>50</option>
+                <option value="100"{% if paginate_by|add:'0' == 100 %}selected{% endif %}>100</option>
+            </select>
+        </div>
+    </form>
+    {% if is_paginated %}
         <div class="adm-paginator">
             {% if 2 < page_obj.number %}
-            <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page=1">
+            <a href="?category={{ category }}&sort_by={{ sort_by }}&paginate_by={{ paginate_by }}&page=1">
                 <i class="fas fa-fast-backward"></i>
             </a>
             {% endif %}
             {% if page_obj.has_previous %}
-                <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page={{ page_obj.previous_page_number }}">
+                <a href="?category={{ category }}&sort_by={{ sort_by }}&paginate_by={{ paginate_by }}&page={{ page_obj.previous_page_number }}">
                     <i class="fas fa-step-backward"></i>
                 </a>
             {% endif %}
@@ -34,11 +35,11 @@
                 {{ page_obj.number }} из {{ page_obj.paginator.num_pages   }}
             </span>
             {% if page_obj.has_next %}
-                <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page={{ page_obj.next_page_number }}">
+                <a href="?category={{ category }}&sort_by={{ sort_by }}&paginate_by={{ paginate_by }}&page={{ page_obj.next_page_number }}">
                     <i class="fas fa-step-forward"></i>
                 </a>
                 {% if page_obj.next_page_number < page_obj.paginator.num_pages %}
-                    <a href="?category={{ category }}&paginate_by={{ paginate_by }}&page=last">
+                    <a href="?category={{ category }}&sort_by={{ sort_by }}&paginate_by={{ paginate_by }}&page=last">
                         <i class="fas fa-fast-forward"></i>
                     </a>
                 {% endif %}
@@ -57,11 +58,31 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Название</th>
-                <th scope="col">Бренд</th>
-                <th scope="col">Категория</th>
-                <th scope="col">Кол-во</th>
-                <th scope="col">Цена, <i class="fas fa-ruble-sign"></i></th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=name&paginate_by={{ paginate_by }}" class="text-white">
+                        Название
+                    </a>
+                </th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=brand&paginate_by={{ paginate_by }}" class="text-white">
+                        Бренд
+                    </a>
+                </th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=category&paginate_by={{ paginate_by }}" class="text-white">
+                        Категория
+                    </a>
+                </th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=quantity&paginate_by={{ paginate_by }}" class="text-white">
+                        Кол-во
+                    </a>
+                </th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=price&paginate_by={{ paginate_by }}" class="text-white">
+                        Цена, <i class="fas fa-ruble-sign"></i>
+                    </a>
+                </th>
             </tr>
         </thead>
         <tbody>
