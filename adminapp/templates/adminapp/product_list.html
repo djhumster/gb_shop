@@ -57,30 +57,34 @@
     <table class="table table-borderless table-hover">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">
+                    <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=pk&paginate_by={{ paginate_by }}" class="text-white">
+                        #&nbsp;{% if not sort_by or sort_by == 'pk' %}<i class="fas fa-sort-up"></i>{% endif %}
+                    </a>
+                </th>
                 <th scope="col">
                     <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=name&paginate_by={{ paginate_by }}" class="text-white">
-                        Название
+                        Название&nbsp;{% if sort_by == 'name' %}<i class="fas fa-sort-up"></i>{% endif %}
                     </a>
                 </th>
                 <th scope="col">
                     <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=brand&paginate_by={{ paginate_by }}" class="text-white">
-                        Бренд
+                        Бренд&nbsp;{% if sort_by == 'brand' %}<i class="fas fa-sort-up"></i>{% endif %}
                     </a>
                 </th>
                 <th scope="col">
                     <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=category&paginate_by={{ paginate_by }}" class="text-white">
-                        Категория
+                        Категория&nbsp;{% if sort_by == 'category' %}<i class="fas fa-sort-up"></i>{% endif %}
                     </a>
                 </th>
                 <th scope="col">
                     <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=quantity&paginate_by={{ paginate_by }}" class="text-white">
-                        Кол-во
+                        Кол-во&nbsp;{% if sort_by == 'quantity' %}<i class="fas fa-sort-up"></i>{% endif %}
                     </a>
                 </th>
                 <th scope="col">
                     <a href="{% url 'admin:product-list' %}?category={{ category }}&sort_by=price&paginate_by={{ paginate_by }}" class="text-white">
-                        Цена, <i class="fas fa-ruble-sign"></i>
+                        Цена, <i class="fas fa-ruble-sign"></i>&nbsp;{% if sort_by == 'price' %}<i class="fas fa-sort-up"></i>{% endif %}
                     </a>
                 </th>
             </tr>
