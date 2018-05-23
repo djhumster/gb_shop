@@ -28,6 +28,18 @@ def get_same_products(pk=None, category=None):
     
     return result
 
+def get_paginator(query_set, page):
+    paginator = Paginator(query_set, per_page=9)
+
+    try:
+        query_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        query_paginator = paginator.page(1)
+    except EmptyPage:
+        query_paginator = paginator.page(paginator.num_pages)
+    
+    return query_paginator
+
 def index_view(request):
     context = {
         'title': 'главная',
@@ -39,18 +51,10 @@ def index_view(request):
 def category_view(request, cat_url=None, page=1):
     category = get_object_or_404(Category, url_path=cat_url)
     products = Product.objects.filter(category=category, is_active=True, brand__is_active=True).order_by('name')
-    paginator = Paginator(products, per_page=9)
-
-    try:
-        products_paginator = paginator.page(page)
-    except PageNotAnInteger:
-        products_paginator = paginator.page(1)
-    except EmptyPage:
-        products_paginator = paginator.page(paginator.num_pages)
 
     context = {
         'title': category.name,
-        'products': products_paginator,
+        'products': get_paginator(products, page),
         'shopping_cart': shopping_cart(request.user)
     }
     
@@ -76,3 +80,19 @@ def product_view(request, cat_url=None, pk=None):
     }
 
     return render(request, 'mainapp/product.html', context)
+
+def search_view(request):
+    if request.GET['q']:
+        page = request.GET.get('page') or 1
+        products = Product.objects.filter(name__icontains=request.GET['q'], is_active=True, brand__is_active=True).order_by('name')
+
+        context = {
+            'title': 'поиск',
+            'products': get_paginator(products, page),
+            'shopping_cart': shopping_cart(request.user),
+            'question': request.GET['q']
+        }
+
+        return render(request, 'mainapp/search.html', context)
+    else:
+        return HttpResponseRedirect(reverse('index'))

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView, MultipleObjectMixin
@@ -95,15 +96,25 @@ class ProductListView(UserIsStaffMixin, PaginateByMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = self.request.GET.get('category', '')
         context['sort_by'] = self.request.GET.get('sort_by', '')
+        context['question'] = self.request.GET.get('q', '')
 
         return context
 
     def get_queryset(self):
+        question = self.request.GET.get('q')
         category = self.request.GET.get('category')
         sort_by = self.request.GET.get('sort_by')
 
         if category:
-            queryset = Product.objects.filter(category__pk=int(category))
+            if question:
+                queryset = Product.objects.filter(
+                    Q(category__pk=int(category)) & Q(name__icontains=question) | Q(brand__name__iexact=question)
+                )
+            else:
+                queryset = Product.objects.filter(category__pk=int(category))
+                
+        elif question:
+            queryset = Product.objects.filter(Q(name__icontains=question) | Q(brand__name__iexact=question))
         else:
             queryset = Product.objects.all()
 

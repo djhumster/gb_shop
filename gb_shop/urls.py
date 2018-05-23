@@ -27,7 +27,8 @@ urlpatterns = [
     path('contacts/', mainapp.contacts_view, name='contacts'),
     path('auth/', include('authapp.urls', namespace='auth')),
     path('cart/', include('shopcartapp.urls', namespace='shopping_cart')),
-    path('admin/', include('adminapp.urls', namespace='admin'))
+    path('admin/', include('adminapp.urls', namespace='admin')),
+    path('search/', mainapp.search_view, name='search')
 ]
 
 if settings.DEBUG is True:

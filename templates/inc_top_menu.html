@@ -17,9 +17,9 @@
                 <h5 class="text-primary mb-0">+7 (812) 111-22-33</h5>
                 <div class="small text-muted">с 10 до 22 ежедневно</div>
             </div>
-            <form class="form-inline mx-lg-3">
-                <div class="input-group w-100">
-                    <input class="form-control" placeholder="Поиск" aria-label="search" type="search">
+            <form class="form-inline mx-lg-3" method="GET" action="{% url 'search' %}">
+                <div class="input-group">
+                    <input name='q' class="form-control" placeholder="Поиск" aria-label="search" type="search">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="submit">
                             <i class="fas fa-search fa-flip-horizontal"></i>
@@ -57,7 +57,7 @@
                         &nbsp;<i class="fas fa-user"></i>
                     </a>
                     {% if user.is_superuser %}
-                        <a class="nav-item nav-link btn btn-sm btn-primary px-3 mx-1 mt-1 mt-lg-0 text-white" href="{% url 'admin:index' %}">
+                        <a class="nav-item nav-link btn btn-sm btn-primary px-3 mx-lg-1 mt-1 mt-lg-0 text-white" href="{% url 'admin:index' %}">
                             <i class="fas fa-unlock-alt"></i>
                         </a>
                     {% endif %}
