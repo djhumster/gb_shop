@@ -6,6 +6,7 @@ from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.urls import reverse
 
 from mainapp.models import Category, Product
+from mainapp.forms import ContactForm
 from shopcartapp.models import ShoppingCart
 
 
@@ -65,6 +66,22 @@ def contacts_view(request):
         'title': 'контакты',
         'shopping_cart': shopping_cart(request.user)
     }
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            sender = form.cleaned_data['sender']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            # Тут должна быть отправка сообщения через send_mail из django.core.mail
+            print(f'Отправитель: {sender}\nEmail: {email}\nТема: {subject}\nТекст:\n{message}')
+        else:
+            context['form'] = form
+    else:
+        context['form'] = ContactForm()
 
     return render(request, 'mainapp/contacts.html', context)
 
